@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Array</title>
+    <link href="https://fonts.googleapis.com/css2?family=Serif" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: serif;
+            background-color: #E5E5E5;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Header Bar */
+        .header {
+            width: 100%;
+            background: #DADADA;
+            text-align: center;
+            font-size: 24px;
+            padding: 15px 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        /* Image Container */
+        .image-container {
+            margin-top: 70px;
+        }
+        .image-container img {
+            width: 800px; /* Adjust size */
+            height: auto;
+        }
+        /* Description */
+        .description {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            max-width: 80%;
+        }
+        /* Navigation Buttons */
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+        .button {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            font-size: 24px;
+            text-decoration: none;
+            color: black;
+        }
+        /* Page Number */
+        .page-number {
+            position: absolute;
+            bottom: 30px;
+            right: 100px;
+            font-size: 16px;
+        }
+        /* Top Right Icons */
+        .top-right {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+        .icon {
+            font-size: 24px;
+            cursor: pointer;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            width: 80%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        /* Scrollable Content */
+        .scroll-content {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        /* Menu Styles */
+        .menu-btn {
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .menu.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid #ddd;
+            border-radius: 10px;
+            margin: 5px 0;
+            background: #f8f8f8;
+        }
+        .menu a:last-child {
+            border-bottom: none;
+        }
+        .menu a img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">SELECTION SORT</div>
+
+    <!-- Image -->
+    <div class="image-container">
+        <img src=" https://raw.githubusercontent.com/Ravikumar4261/IMAGE/main/selection%20sort%202/selection%20%201.png
+        " alt="Dynamic Array">
+    </div>
+
+    <!-- Description -->
+    <div class="description">Lets sort the array using the selection sort algorithm</div>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <a href="index.html" class="button">&#x21A9;</a> <!-- Left Arrow -->
+        <div class="page-number">01/ 30</div>
+        <a href="2.html" class="button">&#x2192;</a> <!-- Right Arrow -->
+    </div>
+
+    <!-- Top Right Icons -->
+    <div class="top-right">
+        <div class="icon" id="openModal">
+            <img src="https://cdn3.iconfinder.com/data/icons/education-science-vol-1-1/512/knowledge_book_reading_read-256.png" alt="Book" width="40">
+        </div>
+        <button class="menu-btn" onclick="toggleMenu(event)">
+            <img src="https://cdn1.iconfinder.com/data/icons/akar-vol-2/24/three-line-horizontal-256.png" alt="Menu" width="40">
+        </button>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="menu" id="menu">
+        <a href="Home.html"><img src="https://cdn0.iconfinder.com/data/icons/work-from-home-18/512/Conditions-policy-terms-agreement-contract-256.png" alt="Terms"> Restart</a>
+        <a href="#"><img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-close-round-256.png" alt="Close"> Close</a>
+    </div>
+
+    <!-- Modal Popup -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div class="scroll-content">
+                <h2>Selection Sort Information</h2>
+                
+                <h3>Definition:</h3>
+                <p>Selection Sort is a sorting algorithm that divides the array into a sorted and an unsorted region, repeatedly selecting the smallest element from the unsorted region and swapping it with the first element of the unsorted region.</p>
+                
+                <h3>How it Works:</h3>
+                <ul>
+                    <li>Find the smallest element in the unsorted region.</li>
+                    <li>Swap it with the first unsorted element.</li>
+                    <li>Move the boundary between the sorted and unsorted sections one step forward.</li>
+                    <li>Repeat until all elements are sorted.</li>
+                </ul>
+                
+                <h3>Time Complexity:</h3>
+                <ul>
+                    <li>Best Case: O(n²)</li>
+                    <li>Average Case: O(n²)</li>
+                    <li>Worst Case: O(n²)</li>
+                </ul>
+                
+                <h3>Advantages:</h3>
+                <ul>
+                    <li>Simple and easy to implement.</li>
+                    <li>Performs well on small datasets.</li>
+                    <li>Requires minimal memory (in-place sorting).</li>
+                </ul>
+                
+                <h3>Disadvantages:</h3>
+                <ul>
+                    <li>Not efficient for large datasets.</li>
+                    <li>Slower than advanced sorting algorithms like Quick Sort or Merge Sort.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("openModal").addEventListener("click", function() {
+            let modal = document.getElementById("modal");
+            modal.classList.add("show");
+        });
+
+        document.getElementById("closeModal").addEventListener("click", function() {
+            let modal = document.getElementById("modal");
+            modal.classList.remove("show");
+        });
+
+        function toggleMenu(event) {
+            event.stopPropagation();
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('show');
+        }
+
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('menu');
+            if (!menu.contains(event.target) && !event.target.matches('.menu-btn')) {
+                menu.classList.remove('show');
+            }
+        });
+    </script>
+
+</body>
+</html>
