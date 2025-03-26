@@ -172,12 +172,27 @@
             height: 20px;
             margin-right: 10px;
         }
+        .sound-icon {
+            position: absolute;
+            left: 500px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .sound-icon img {
+            width: 30px;
+            height: 30px;
+        }
     </style>
 </head>
 <body>
 
     <!-- Header -->
-    <div class="header">SELECTION SORT</div>
+    <div class="header">
+        <div class="sound-icon" id="soundControl">
+            <img id="soundIcon" src="https://cdn-icons-png.flaticon.com/512/727/727269.png" alt="Play Sound">
+        </div>
+        SELECTION SORT</div>
 
     <!-- Image -->
     <div class="image-container">
@@ -254,7 +269,12 @@
 
         </div>
     </div>
+    <audio id="audioPlayer">
+        <source src="Selection Sort.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
+   
     <script>
         document.getElementById("openModal").addEventListener("click", function() {
             let modal = document.getElementById("modal");
@@ -276,6 +296,20 @@
             const menu = document.getElementById('menu');
             if (!menu.contains(event.target) && !event.target.matches('.menu-btn')) {
                 menu.classList.remove('show');
+            }
+        });
+
+        const soundControl = document.getElementById("soundControl");
+        const soundIcon = document.getElementById("soundIcon");
+        const audioPlayer = document.getElementById("audioPlayer");
+
+        soundControl.addEventListener("click", function() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                soundIcon.src = "https://cdn3.iconfinder.com/data/icons/system-basic-vol-5/20/icon-speaker-loudness-sound-2-256.png"; // Pause Icon
+            } else {
+                audioPlayer.pause();
+                soundIcon.src = "https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-45-256.png"; // Play Icon
             }
         });
     </script>
